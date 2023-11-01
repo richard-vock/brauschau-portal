@@ -3,10 +3,13 @@ import { vitePreprocess } from '@sveltejs/kit/vite'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  kit: {
-    adapter: adapter(),
-  },
-  preprocess: vitePreprocess(),
+    kit: {
+        adapter: adapter(),
+        csrf: {
+            checkOrigin: process.env.NODE_ENV === 'production',
+        },
+    },
+    preprocess: vitePreprocess(),
 }
 
 export default config
