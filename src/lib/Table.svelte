@@ -27,7 +27,7 @@
 >
 	<div class="flex items-center justify-between mb-4">
 		<div class="space-y-1">
-			<h2 class="text-xl font-semibold">Recent Users</h2>
+			<h2 class="text-xl font-semibold">Recent Registered Users</h2>
 			<p class="text-sm text-gray-500">
 				Fetched {users.length} users in {duration ? duration : 'unknown'} ms
 			</p>
