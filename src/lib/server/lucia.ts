@@ -16,6 +16,7 @@ export const auth = lucia({
         return {
             email: data.email,
             verified: data.verified,
+            group: data.group_id
         };
     },
     csrfProtection: process.env.NODE_ENV === 'production',

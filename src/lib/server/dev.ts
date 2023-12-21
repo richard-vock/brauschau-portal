@@ -8,11 +8,19 @@ async function resetDatabase() {
         -- DROP TABLE IF EXISTS user_session;
         -- DROP TABLE IF EXISTS user_verify_requests;
         -- DROP TABLE IF EXISTS auth_user;
+        -- DROP TABLE IF EXISTS groups;
+
+        CREATE TABLE IF NOT EXISTS groups (
+            group_id TEXT NOT NULL PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL DEFAULT ''
+        );
 
         CREATE TABLE IF NOT EXISTS auth_user (
             id TEXT NOT NULL PRIMARY KEY,
             email TEXT UNIQUE NOT NULL,
-            verified BOOLEAN NOT NULL
+            verified BOOLEAN NOT NULL,
+            group_id TEXT NULL REFERENCES groups(group_id)
         );
 
         CREATE TABLE IF NOT EXISTS user_key (
