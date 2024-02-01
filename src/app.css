@@ -2,26 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.js-hamburger-open span:nth-child(1) {
+  @apply w-0 top-1.5 left-1/2;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.js-hamburger-open span:nth-child(2) {
+  @apply rotate-45;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.js-hamburger-open span:nth-child(3) {
+  @apply -rotate-45;
+}
+
+.js-hamburger-open span:nth-child(4) {
+  @apply w-0 top-1.5 left-1/2;
+}
+
+.js-mobileNav-open {
+  @apply block;
+}
+
+.lazy.loaded {
+  @apply opacity-100;
 }

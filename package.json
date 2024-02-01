@@ -10,12 +10,14 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-    "lint": "eslint --ext .js,.svelte,.ts src"
+    "lint": "eslint --ext .js,.svelte,.ts src",
+    "cssdev": "pnpx tailwindcss -i ./src/tailwind.css -o ./src/css/main.css -w"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-vercel": "^2.4.2",
     "@sveltejs/kit": "^1.5.0",
+    "@tailwindcss/forms": "^0.5.7",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "autoprefixer": "^10.4.14",
@@ -24,7 +26,7 @@
     "postcss": "^8.4.23",
     "svelte": "^3.58.0",
     "svelte-check": "^3.0.1",
-    "tailwindcss": "^3.3.1",
+    "tailwindcss": "^3.3.2",
     "turbo": "^1.9.3",
     "typescript": "^5.0.0",
     "vite": "^4.2.0"
@@ -49,19 +51,29 @@
       "eslint:recommended",
       "plugin:svelte/recommended"
     ],
-    "plugins": ["svelte", "@typescript-eslint"],
+    "plugins": [
+      "svelte",
+      "@typescript-eslint"
+    ],
     "overrides": [
       {
-        "files": ["*.ts", "*.tsx"],
+        "files": [
+          "*.ts",
+          "*.tsx"
+        ],
         "extends": [
           "plugin:@typescript-eslint/recommended"
         ],
         "parserOptions": {
-          "project": ["./.svelte-kit/tsconfig.json"]
+          "project": [
+            "./.svelte-kit/tsconfig.json"
+          ]
         }
       },
       {
-        "files": ["*.svelte"],
+        "files": [
+          "*.svelte"
+        ],
         "parser": "svelte-eslint-parser",
         "parserOptions": {
           "parser": "@typescript-eslint/parser"

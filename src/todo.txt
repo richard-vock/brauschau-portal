@@ -1,0 +1,5 @@
+
+- Biere backend-teil
+- registrierung mit 3rd party
+- mailversand für aktivierung
+- brauerkontingent

@@ -14,13 +14,14 @@ export const auth = lucia({
     middleware: sveltekit(),
     getUserAttributes: (data) => {
         return {
+            name: data.name,
             email: data.email,
             verified: data.verified,
-            group: data.group_id
+            group: data.group_id,
         };
     },
     csrfProtection: process.env.NODE_ENV === 'production',
-    debugMode: true,
+    debugMode: process.env.NODE_ENV !== 'production',
 });
 
 

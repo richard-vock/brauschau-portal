@@ -3,8 +3,9 @@
 
     import '../../app.css';
 
-    export let form: { message?: string };
+    export let data;
 </script>
+
 
 <section
     class="relative flex min-h-screen items-center justify-center bg-amber-100 py-16 sm:py-20"
@@ -34,20 +35,20 @@
     <div class="mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div class="mx-auto flex max-w-lg flex-col items-center">
             <!-- Logo -->
-            <!-- <a href="index.html" class="flex flex-shrink-0"> -->
-                <!--   <img src="images/logo-icon.png" class="h-auto w-12" /> -->
-                <!-- </a> -->
+            <a href="index.html" class="flex flex-shrink-0">
+                <img src="images/logo-icon.png" class="h-auto w-12" />
+            </a>
 
             <h1 class="mt-10 text-center text-4xl font-semibold text-slate-900">
-                Als Brauer registrieren
+                Login
             </h1>
             <p class="mt-4 text-center leading-relaxed text-slate-600">
-                Du bist bereits registriert?
+                Don’t have an account yet?
                 <a
-                    href="signin.html"
+                    href="signup.html"
                     class="block text-center font-medium text-slate-800 underline duration-150 hover:text-slate-900 sm:ml-1.5 sm:inline-block sm:text-left"
                 >
-                    Hier geht's zum Login
+                    Get started for free
                 </a>
                 .
             </p>
@@ -84,7 +85,7 @@
                             fill="#57A75C"
                         />
                     </svg>
-                    Google
+                    Mit Google einloggen
                 </button>
                 <button
                     class="flex w-full items-center border border-gray-secondary-400/60 bg-gray-secondary-50 px-5 py-3.5 text-md font-medium text-slate-800 duration-150 hover:bg-vanilla sm:w-auto sm:text-base"
@@ -106,21 +107,7 @@
                             fill="black"
                         />
                     </svg>
-                    Apple
-                </button>
-                <button
-                    class="flex w-full items-center border border-gray-secondary-400/60 bg-gray-secondary-50 px-5 py-3.5 text-md font-medium text-slate-800 duration-150 hover:bg-vanilla sm:w-auto sm:text-base"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        class="mr-3.5 h-5 w-5"
-                        viewBox="0 0 48 48"
-                    >
-                        <path fill="#3F51B5" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z"></path><path fill="#FFF" d="M34.368,25H31v13h-5V25h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H35v4h-2.287C31.104,17,31,17.6,31,18.723V21h4L34.368,25z"></path>
-                    </svg>
-                    Facebook
+                    Mit Apple einloggen
                 </button>
             </div>
 
@@ -129,14 +116,14 @@
                 <h4
                     class="flex-shrink-0 px-4 text-base tracking-wide text-slate-500"
                 >
-                    oder mach bei uns einen Account
+                    oder einloggen mit
                 </h4>
                 <div class="h-px flex-1 bg-gray-secondary-400/60"></div>
             </div>
 
             <!-- Form container -->
             <div class="mt-10 w-full">
-                <form method="POST" use:enhance>
+                <form action="/?/login" method="POST">
                     <div>
                         <label
                             for="email"
@@ -153,6 +140,7 @@
                                 required
                                 placeholder="foobar@email.com"
                                 class="block w-full appearance-none border border-gray-secondary-400/60 bg-gray-secondary-50 py-2.5 pl-12 pr-8 text-slate-800 placeholder-slate-500/75 outline-none duration-150 hover:bg-vanilla focus:border-gray-secondary-200 focus:bg-vanilla focus:outline-none focus:ring-gray-secondary-200"
+                                value={data?.form?.email ?? ''}
                             />
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -171,13 +159,21 @@
                         </div>
                     </div>
                     <div class="mt-7">
-                        <label
-                            for="password"
-                            class="text-base font-medium text-slate-700"
-                        >
-                            Password
-                        </label>
+                        <div class="flex justify-between">
+                            <label
+                                for="password"
+                                class="text-base font-medium text-slate-700"
+                            >
+                                Passwort
+                            </label>
 
+                            <!-- <a -->
+                            <!--     href="password-reset.html" -->
+                            <!--     class="font-medium text-slate-800 underline duration-150 hover:text-slate-900" -->
+                            <!-- > -->
+                            <!--     Forgot password? -->
+                            <!-- </a> -->
+                        </div>
                         <div class="relative mt-1.5">
                             <input
                                 id="password"
@@ -204,43 +200,10 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="mt-7">
-                        <label
-                            for="password-repeat"
-                            class="text-base font-medium text-slate-700"
-                        >
-                            Password (wiederholen)
-                        </label>
-
-                        <div class="relative mt-1.5">
-                            <input
-                                id="password"
-                                name="password-repeat"
-                                type="password"
-                                required
-                                placeholder="Password"
-                                class="block w-full appearance-none border border-gray-secondary-400/60 bg-gray-secondary-50 py-2.5 pl-12 pr-8 text-slate-800 placeholder-slate-500/75 outline-none duration-150 hover:bg-vanilla focus:border-gray-secondary-200 focus:bg-vanilla focus:outline-none focus:ring-gray-secondary-200"
-                            />
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                />
-                            </svg>
-                        </div>
-                    </div>
                     <button
                         class="group mt-8 inline-flex w-full items-center justify-center bg-slate-700 px-6 py-3 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 sm:mt-10 xl:px-7 xl:py-4 xl:text-lg"
                     >
-                        Sign up
+                        Login
                     </button>
                 </form>
             </div>

@@ -32,6 +32,7 @@ export const actions: Actions = {
                     password: password,
                 },
                 attributes: {
+                    name: "",
                     email: email,
                     verified: false,
                 } 
