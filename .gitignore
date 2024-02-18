@@ -13,3 +13,4 @@ vite.config.ts.timestamp-*
 *.tsbuildinfo
 combined.log
 error.log
+.direnv
