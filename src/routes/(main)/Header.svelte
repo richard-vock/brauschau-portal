@@ -22,30 +22,46 @@ let mobileMenuOpen = false;
                     >
                         Startseite
                     </a>
-                    <a
-                        href="/event"
-                        class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
-                    >
-                        Das Event
-                    </a>
-                    <a
-                        href="/tickets"
-                        class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
-                    >
-                        Tickets
-                    </a>
-                    <a
-                        href="/rueckblick"
-                        class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
-                    >
-                        Rückblick
-                    </a>
+                    <!-- <a -->
+                    <!--     href="/event" -->
+                    <!--     class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
+                    <!-- > -->
+                    <!--     Das Event -->
+                    <!-- </a> -->
+                    <!-- <a -->
+                    <!--     href="/tickets" -->
+                    <!--     class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
+                    <!-- > -->
+                    <!--     Tickets -->
+                    <!-- </a> -->
+                    <!-- <a -->
+                    <!--     href="/rueckblick" -->
+                    <!--     class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
+                    <!-- > -->
+                    <!--     Rückblick -->
+                    <!-- </a> -->
                     <a
                         href="/aussteller"
                         class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
                     >
                         Für Aussteller
                     </a>
+                    {#if data?.session?.user?.verified }
+                        <a
+                            href="/profil"
+                            class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                        >
+                            Dein Profil
+                        </a>
+                    {/if}
+                    {#if data?.session?.user?.admin }
+                        <a
+                            href="/admin"
+                            class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                        >
+                            Admin
+                        </a>
+                    {/if}
                 </div>
             </div>
 
@@ -117,29 +133,39 @@ let mobileMenuOpen = false;
                     <div>
                         <div class="flex flex-col divide-y divide-gray-secondary-400/75">
                             <a
-                                href="index.html"
+                                href="/"
                                 class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
                             >
-                                Home
+                                Startseite
                             </a>
+                            <!-- <a -->
+                            <!--     href="/event" -->
+                            <!--     class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
+                            <!-- > -->
+                            <!--     Das Event -->
+                            <!-- </a> -->
                             <a
-                                href="about.html"
+                                href="/aussteller"
                                 class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
                             >
-                                About
+                                Für Aussteller
                             </a>
-                            <a
-                                href="pricing.html"
-                                class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
-                            >
-                                Pricing
-                            </a>
-                            <a
-                                href="contact.html"
-                                class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
-                            >
-                                Contact
-                            </a>
+                            {#if data?.session?.user?.verified }
+                                <a
+                                    href="/profil"
+                                    class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                                >
+                                    Dein Profil
+                                </a>
+                            {/if}
+                            {#if data?.session?.user?.admin }
+                                <a
+                                    href="/admin"
+                                    class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                                >
+                                    Admin
+                                </a>
+                            {/if}
 
                         </div>
                         {#if !data?.session}

@@ -101,4 +101,36 @@ export const actions: Actions = {
             UPDATE auth_user SET group_id = NULL WHERE id = ${session.user.userId};
         `;
     },
+    // create_beer: async ({ locals, request }) => {
+    //     console.log("create_beer");
+    //     const session = await locals.auth.validate();
+    //     if (!session) throw redirect(302, '/');
+    //
+    //     const form = await request.formData();
+    //     const formData = {
+    //         beername: form.get('beername'),
+    //         beerstyle: form.get('beerstyle'),
+    //         beerabv: form.get('beerabv'),
+    //         beergravity: form.get('beergravity'),
+    //         beeribu: form.get('beeribu'),
+    //         beerdesc: form.get('beerdesc'),
+    //         beerrecipe: form.get('beerrecipe'),
+    //         beeruntappd: form.get('beeruntappd'),
+    //     };
+    //     if (formData.beername.length === 0) {
+    //         console.log("fail");
+    //         return fail(400, { "form": { ...formData, beernameempty: true } });
+    //     }
+    //     const beer = {
+    //         "name": form.get('beername'),
+    //         "style": form.get('beerstyle'),
+    //         "abv": form.get('beerabv'),
+    //         "gravity": form.get('beergravity'),
+    //         "ibu": form.get('beeribu'),
+    //         "description": form.get('beerdesc'),
+    //         "recipe": form.get('beerrecipe'),
+    //         "untappd": form.get('beeruntappd'),
+    //     };
+    //     console.log(beer);
+    // },
 };

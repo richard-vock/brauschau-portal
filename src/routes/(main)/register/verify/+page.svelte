@@ -1,7 +1,5 @@
 <script lang="ts">
-    // import { enhance } from '$app/forms';
-    //
-    // export let form: { message?: string };
+    export let data;
 </script>
 
 
@@ -19,7 +17,7 @@
             <p
                 class="mx-auto mt-5 max-w-sm text-center text-lg leading-relaxed text-slate-700 sm:mt-6 sm:text-xl"
             >
-                Wir haben eine E-Mail an geschickt. Bitte folge dem Registrierungslink in dieser E-Mail um die Registrierung abzuschicken.
+                Wir haben eine E-Mail an <b>{ data.email }</b> geschickt. Bitte folge dem Registrierungslink in dieser E-Mail um die Registrierung abzuschicken.
             </p>
             <div class="mt-10 flex justify-center sm:mt-12">
                 <a

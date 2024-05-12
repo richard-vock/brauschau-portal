@@ -30,19 +30,19 @@
                     <p class="text-md font-semibold text-white">Brauschau</p>
                     <div class="mt-4 flex flex-col space-y-3">
                         <a
-                            href="about.html"
+                            href="https://bonner-heimbrauer.de/impressum/"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Impressum
                         </a>
                         <a
-                            href="#"
+                            href="/kontakt"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Kontakt
                         </a>
                         <a
-                            href="#"
+                            href="https://bonner-heimbrauer.de/datenschutzerklaerung/"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Datenschutz
@@ -55,19 +55,19 @@
                     <p class="text-md font-semibold text-white">Verein</p>
                     <div class="mt-4 flex flex-col space-y-3">
                         <a
-                            href="#"
+                            href="https://bonner-heimbrauer.de"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Webseite
                         </a>
                         <a
-                            href="#"
+                            href="https://bonner-heimbrauer.de/kontakt"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Kontakt
                         </a>
                         <a
-                            href="#"
+                            href="https://www.instagram.com/bonnerheimbrauer/"
                             class="text-md text-slate-100 duration-150 hover:text-white"
                         >
                             Instagram
