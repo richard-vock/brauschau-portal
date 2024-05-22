@@ -28,12 +28,12 @@ let mobileMenuOpen = false;
                     <!-- > -->
                     <!--     Das Event -->
                     <!-- </a> -->
-                    <!-- <a -->
-                    <!--     href="/tickets" -->
-                    <!--     class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
-                    <!-- > -->
-                    <!--     Tickets -->
-                    <!-- </a> -->
+                    <a
+                        href="/tickets"
+                        class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                    >
+                        Tickets
+                    </a>
                     <!-- <a -->
                     <!--     href="/rueckblick" -->
                     <!--     class="inline-block px-4 py-2 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
@@ -138,12 +138,12 @@ let mobileMenuOpen = false;
                             >
                                 Startseite
                             </a>
-                            <!-- <a -->
-                            <!--     href="/event" -->
-                            <!--     class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900" -->
-                            <!-- > -->
-                            <!--     Das Event -->
-                            <!-- </a> -->
+                            <a
+                                href="/tickets"
+                                class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
+                            >
+                                Tickets
+                            </a>
                             <a
                                 href="/aussteller"
                                 class="block px-4 pb-2 pt-4 font-medium text-slate-700 hover:bg-amber-50 hover:text-slate-900"
