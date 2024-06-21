@@ -62,6 +62,21 @@ Ort: GSI
 
 In den kommenden Wochen und Monaten erhältst du weitere Informationen zur Veranstaltung, einschließlich des genauen Ablaufs und weiterer organisatorischer Hinweise.
 
+Solltest Du als Aussteller im GSI selber übernachten wollen gibt es für 2024 Sonderpreise:
+
+Einzelzimmer inkl. Frühstück: 72€
+Doppelzimmer inkl. Frühstück: 96€
+
+Dafür musst Du direkt über die E-Mailadresse der Reservierungsabteilung des GSI
+
+    info@gsi-bonn.de
+
+buchen und das Stichwort
+
+    Crew-Heimbrauer 2024
+
+angeben.
+
 Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter info@bonner-brauschau.de.
 
 Mit freundlichen Grüßen,
@@ -79,6 +94,21 @@ Datum: 28. September 2024<br />\n
 Ort: GSI<br /><br />\n\n
 
 In den kommenden Wochen und Monaten erhältst du weitere Informationen zur Veranstaltung, einschließlich des genauen Ablaufs und weiterer organisatorischer Hinweise.<br /><br />\n\n
+
+Solltest Du als Aussteller im GSI selber übernachten wollen gibt es für 2024 Sonderpreise:<br /><br />\n\n
+
+Einzelzimmer inkl. Frühstück: 72€<br />\n
+Doppelzimmer inkl. Frühstück: 96€<br /><br />\n\n
+
+Dafür musst Du direkt über die E-Mailadresse der Reservierungsabteilung des GSI<br /><br />\n\n
+
+    info@gsi-bonn.de<br /><br />\n\n
+
+buchen und das Stichwort<br /><br />\n\n
+
+    Crew-Heimbrauer 2024<br /><br />\n\n
+
+angeben.<br /><br />\n\n
 
 Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter <a href="mailto:info@bonner-brauschau.de">info@bonner-brauschau.de</a>.<br /><br />\n\n
 
