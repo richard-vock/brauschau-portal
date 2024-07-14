@@ -17,8 +17,8 @@ export const load: PageServerLoad = async ({ locals }) => {
             SELECT COUNT(id) FROM auth_user;
         `;
         const user_count = parseInt(count_res.rows[0]["count"]);
-        const theshold = import.meta.env.VITE_BREWER_CONTINGENT;
-        if (user_count >= theshold) {
+        const threshold = import.meta.env.VITE_BREWER_CONTINGENT;
+        if (user_count >= threshold) {
             return { success: false, limited: true };
         }
     } catch (error) {
