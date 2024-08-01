@@ -4,6 +4,7 @@
     import '../../app.css';
 
     export let data;
+    export let form;
 </script>
 
 
@@ -127,13 +128,18 @@
 
             <!-- Form container -->
             <div class="mt-10 w-full">
-                <form action="/?/login" method="POST">
+                <form action="?/login" method="POST">
                     <div>
+                        {#if form?.form.invalid}
+                            <p class="text-red-500 mb-5">
+                                Die Kombination aus Benutzername und Passwort ist falsch!
+                            </p>
+                        {/if}
                         <label
                             for="email"
                             class="block text-base font-medium text-slate-700"
                         >
-                            Email
+                            Email:
                         </label>
                         <div class="relative mt-1.5">
                             <input
@@ -168,7 +174,7 @@
                                 for="password"
                                 class="text-base font-medium text-slate-700"
                             >
-                                Passwort
+                                Passwort:
                             </label>
 
                             <!-- <a -->

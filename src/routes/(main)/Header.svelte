@@ -71,7 +71,7 @@ let mobileMenuOpen = false;
                         <div class="hidden lg:block">
                             {data?.session.user?.email}
                         </div>
-                        <form action="/?/logout" method="POST" use:enhance>
+                        <form action="/login?/logout" method="POST" use:enhance>
                             <button
                                 type="submit"
                                 class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900"
