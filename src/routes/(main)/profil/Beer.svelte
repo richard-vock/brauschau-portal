@@ -1,11 +1,12 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import { Markdown } from 'svelte-exmarkdown';
 
     export let beer;
     export let onStartEdit;
 </script>
 
-<div class="flex items-start justify-between">
+<div class="flex items-start justify-between mb-2">
     <div>
         <h3 class="text-xl font-semibold text-slate-900">{beer.name}</h3>
         <p class="text-slate-600">{beer.style}</p>
@@ -20,7 +21,7 @@
 <div class="flex flex-col gap-4">
     <div>
         {#if beer.description}
-            <p class="mt-2 text-slate-600">{beer.description}</p>
+            <div class="mt-2 text-slate-600 flex flex-col gap-2"><Markdown md={beer.description} /></div>
         {:else}
             <p class="mt-2 text-slate-600">Keine Beschreibung vorhanden.</p>
         {/if}
