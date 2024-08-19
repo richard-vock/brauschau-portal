@@ -125,6 +125,9 @@ export const actions: Actions = {
         if (formData.beername.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Name darf nicht leer sein." });
         }
+        if (formData.beername.length > 70) {
+            return fail(400, { ...formData, success: false, msg: "Name darf nicht länger als 70 Zeichen sein." });
+        }
         if (formData.beerstyle.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Bierstil darf nicht leer sein." });
         }
@@ -133,6 +136,9 @@ export const actions: Actions = {
         }
         if (formData.beergravity.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Stammwürze darf nicht leer sein." });
+        }
+        if ((formData.beerdesc?.length ?? 0) > 500) {
+            return fail(400, { ...formData, success: false, msg: "Beschreibung darf nicht länger als 500 Zeichen sein." });
         }
         const beer = {
             "userid": session.user.userId,
@@ -176,6 +182,9 @@ export const actions: Actions = {
         if (formData.beername.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Name darf nicht leer sein." });
         }
+        if (formData.beername.length > 70) {
+            return fail(400, { ...formData, success: false, msg: "Name darf nicht länger als 70 Zeichen sein." });
+        }
         if (formData.beerstyle.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Bierstil darf nicht leer sein." });
         }
@@ -184,6 +193,9 @@ export const actions: Actions = {
         }
         if (formData.beergravity.length === 0) {
             return fail(400, { ...formData, success: false, msg: "Stammwürze darf nicht leer sein." });
+        }
+        if ((formData.beerdesc?.length ?? 0) > 500) {
+            return fail(400, { ...formData, success: false, msg: "Beschreibung darf nicht länger als 500 Zeichen sein." });
         }
         const beer = {
             "userid": session.user.userId,

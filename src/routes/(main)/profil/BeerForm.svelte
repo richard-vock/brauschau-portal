@@ -6,6 +6,11 @@
     export let handleCancel;
     export let handleSuccess = () => {};
 
+    let maxNameChars = 70;
+    let maxDescChars = 500;
+    let beerName = form?.beername ?? '';
+    let beerDesc = form?.beerdesc ?? '';
+
     function formAction() {
         if (edit >= 0) {
             return '/profil?/edit_beer';
@@ -22,8 +27,15 @@
 
     <div class="mt-8 grid gap-3 md:grid-cols-6">
         <div class="md:col-span-3">
-            <label for="beername" class="block text-sm font-medium text-slate-700">Name des Bieres</label>
-            <input name="beername" class="w-full" type="text" value={form?.beername ?? ''} placeholder="Mein Wiener Lager" />
+            <div class="flex justify-between">
+                <label for="beername" class="block text-sm font-medium text-slate-700">Name des Bieres</label>
+                {#if beerName.length > maxNameChars}
+                    <label class="block text-sm font-medium text-red-700">{beerName.length} / {maxNameChars}</label>
+                {:else}
+                    <label class="block text-sm font-medium text-slate-700">{beerName.length} / {maxNameChars}</label>
+                {/if}
+            </div>
+            <input name="beername" class="w-full" type="text" bind:value={beerName} placeholder="Mein Wiener Lager" />
         </div>
         <div class="md:col-span-3">
             <label for="beerstyle" class="block text-sm font-medium text-slate-700">Bierstil</label>
@@ -42,8 +54,15 @@
             <input name="beeribu" class="w-full" type="text" placeholder="25" value={form?.beeribu ?? ''} />
         </div>
         <div class="md:col-span-6">
-            <label for="beerdesc" class="block text-sm font-medium text-slate-700">Kurzbeschreibung (optional)</label>
-            <textarea name="beerdesc" class="w-full" rows="4" type="text" value={form?.beerdesc ?? ''} placeholder="Kurzbeschreibung des Bieres" />
+            <div class="flex justify-between">
+                <label for="beerdesc" class="block text-sm font-medium text-slate-700">Kurzbeschreibung (optional)</label>
+                {#if beerDesc.length > maxDescChars}
+                    <label class="block text-sm font-medium text-red-700">{beerDesc.length} / {maxDescChars}</label>
+                {:else}
+                    <label class="block text-sm font-medium text-slate-700">{beerDesc.length} / {maxDescChars}</label>
+                {/if}
+            </div>
+            <textarea name="beerdesc" class="w-full" rows="4" type="text" bind:value={beerDesc} placeholder="Kurzbeschreibung des Bieres" />
         </div>
         <div class="md:col-span-3">
             <label for="beerrecipe" class="block text-sm font-medium text-slate-700">Rezeptlink (optional)</label>
