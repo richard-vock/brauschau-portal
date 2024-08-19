@@ -51,7 +51,7 @@ export const actions: Actions = {
             return fail(400, { form: { email, unknown: true } });
         }
 
-        throw redirect(302, '/');
+        throw redirect(302, '/profil');
     },
     logout: async (event) => {
         const session = await event.locals.auth.validate();
