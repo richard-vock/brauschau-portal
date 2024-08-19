@@ -21,6 +21,11 @@ export const load: PageServerLoad = async ({ locals }) => {
         group_name = res.rows[0]["name"];
         group_desc = res.rows[0]["description"];
     }
+
+    const beers = await sql`
+        SELECT * FROM beers WHERE user_id = ${session.user.userId};
+    `;
+
     return {
         user: {
             name: session.user.name,
@@ -30,7 +35,8 @@ export const load: PageServerLoad = async ({ locals }) => {
         form: {
             groupname: group_name,
             groupdesc: group_desc,
-        }
+        },
+        beers: beers.rows,
     };
 };
 
@@ -54,10 +60,10 @@ export const actions: Actions = {
         const code = form.get('code');
 
         if (code.length === 0) {
-            return fail(400, { code, empty: true });
+            return fail(400, { code, success: false, msg: "Code darf nicht leer sein." });
         }
         if (code.length !== 12) {
-            return fail(400, { code, invalid: true });
+            return fail(400, { code, success: false, msg: "Ungültiger Code." });
         }
 
         const res = await sql`
@@ -101,36 +107,124 @@ export const actions: Actions = {
             UPDATE auth_user SET group_id = NULL WHERE id = ${session.user.userId};
         `;
     },
-    // create_beer: async ({ locals, request }) => {
-    //     console.log("create_beer");
-    //     const session = await locals.auth.validate();
-    //     if (!session) throw redirect(302, '/');
-    //
-    //     const form = await request.formData();
-    //     const formData = {
-    //         beername: form.get('beername'),
-    //         beerstyle: form.get('beerstyle'),
-    //         beerabv: form.get('beerabv'),
-    //         beergravity: form.get('beergravity'),
-    //         beeribu: form.get('beeribu'),
-    //         beerdesc: form.get('beerdesc'),
-    //         beerrecipe: form.get('beerrecipe'),
-    //         beeruntappd: form.get('beeruntappd'),
-    //     };
-    //     if (formData.beername.length === 0) {
-    //         console.log("fail");
-    //         return fail(400, { "form": { ...formData, beernameempty: true } });
-    //     }
-    //     const beer = {
-    //         "name": form.get('beername'),
-    //         "style": form.get('beerstyle'),
-    //         "abv": form.get('beerabv'),
-    //         "gravity": form.get('beergravity'),
-    //         "ibu": form.get('beeribu'),
-    //         "description": form.get('beerdesc'),
-    //         "recipe": form.get('beerrecipe'),
-    //         "untappd": form.get('beeruntappd'),
-    //     };
-    //     console.log(beer);
-    // },
+    create_beer: async ({ locals, request }) => {
+        const session = await locals.auth.validate();
+        if (!session) throw redirect(302, '/');
+
+        const form = await request.formData();
+        const formData = {
+            beername: form.get('beername'),
+            beerstyle: form.get('beerstyle'),
+            beerabv: form.get('beerabv'),
+            beergravity: form.get('beergravity'),
+            beeribu: form.get('beeribu'),
+            beerdesc: form.get('beerdesc'),
+            beerrecipe: form.get('beerrecipe'),
+            beeruntappd: form.get('beeruntappd'),
+        };
+        if (formData.beername.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Name darf nicht leer sein." });
+        }
+        if (formData.beerstyle.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Bierstil darf nicht leer sein." });
+        }
+        if (formData.beerabv.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "ABV darf nicht leer sein." });
+        }
+        if (formData.beergravity.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Stammwürze darf nicht leer sein." });
+        }
+        const beer = {
+            "userid": session.user.userId,
+            "name": form.get('beername'),
+            "style": form.get('beerstyle'),
+            "abv": form.get('beerabv'),
+            "gravity": form.get('beergravity'),
+            "ibu": form.get('beeribu'),
+            "description": form.get('beerdesc'),
+            "recipe": form.get('beerrecipe'),
+            "untappd": form.get('beeruntappd'),
+        };
+        const res = await sql`
+            INSERT INTO beers (user_id, name, style, abv, gravity, ibu, description, recipe, untappd)
+            VALUES (${beer.userid}, ${beer.name}, ${beer.style}, ${beer.abv}, ${beer.gravity}, ${beer.ibu}, ${beer.description}, ${beer.recipe}, ${beer.untappd})
+        `;
+
+        if (res.rowCount === 0) {
+            console.log("error", "create");
+            console.log(res);
+            return fail(500, { ...formData, success: false, msg: "Es ist ein Fehler aufgetreten. Bitte versuche es erneut." });
+        } else {
+            return { success: true };
+        }
+    },
+    edit_beer: async ({ locals, request }) => {
+        const session = await locals.auth.validate();
+        if (!session) throw redirect(302, '/');
+
+        const form = await request.formData();
+        const formData = {
+            beername: form.get('beername'),
+            beerstyle: form.get('beerstyle'),
+            beerabv: form.get('beerabv'),
+            beergravity: form.get('beergravity'),
+            beeribu: form.get('beeribu'),
+            beerdesc: form.get('beerdesc'),
+            beerrecipe: form.get('beerrecipe'),
+            beeruntappd: form.get('beeruntappd'),
+        };
+        if (formData.beername.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Name darf nicht leer sein." });
+        }
+        if (formData.beerstyle.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Bierstil darf nicht leer sein." });
+        }
+        if (formData.beerabv.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "ABV darf nicht leer sein." });
+        }
+        if (formData.beergravity.length === 0) {
+            return fail(400, { ...formData, success: false, msg: "Stammwürze darf nicht leer sein." });
+        }
+        const beer = {
+            "userid": session.user.userId,
+            "name": form.get('beername'),
+            "style": form.get('beerstyle'),
+            "abv": form.get('beerabv'),
+            "gravity": form.get('beergravity'),
+            "ibu": form.get('beeribu'),
+            "description": form.get('beerdesc'),
+            "recipe": form.get('beerrecipe'),
+            "untappd": form.get('beeruntappd'),
+        };
+        const res = await sql`
+            UPDATE beers SET
+                name = ${beer.name},
+                style = ${beer.style},
+                abv = ${beer.abv},
+                gravity = ${beer.gravity},
+                ibu = ${beer.ibu},
+                description = ${beer.description},
+                recipe = ${beer.recipe},
+                untappd = ${beer.untappd}
+            WHERE id = ${form.get('beer_id')} AND user_id = ${session.user.userId};
+        `;
+
+        if (res.rowCount === 0) {
+            console.log("error", "edit");
+            console.log(res);
+            return fail(500, { ...formData, success: false, msg: "Es ist ein Fehler aufgetreten. Bitte versuche es erneut." });
+        } else {
+            return { success: true };
+        }
+    },
+    delete_beer: async ({ locals, request }) => {
+        const session = await locals.auth.validate();
+        if (!session) throw redirect(302, '/');
+
+        const form = await request.formData();
+        const beer_id = form.get('beer_id');
+        const res = await sql`
+            DELETE FROM beers WHERE id = ${beer_id} AND user_id = ${session.user.userId};
+        `;
+    }
 };
