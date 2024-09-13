@@ -177,12 +177,12 @@
                                 Passwort:
                             </label>
 
-                            <!-- <a -->
-                            <!--     href="password-reset.html" -->
-                            <!--     class="font-medium text-slate-800 underline duration-150 hover:text-slate-900" -->
-                            <!-- > -->
-                            <!--     Forgot password? -->
-                            <!-- </a> -->
+                            <a
+                                href="/password-reset"
+                                class="font-medium text-slate-800 underline duration-150 hover:text-slate-900"
+                            >
+                                Passwort vergessen?
+                            </a>
                         </div>
                         <div class="relative mt-1.5">
                             <input
