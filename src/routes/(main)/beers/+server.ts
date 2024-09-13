@@ -59,70 +59,51 @@ const getBeers = async () => {
     });
 }
 
-const getNumBeersPerUser = async () => {
-    const beers = await sql`
-        SELECT auth_user.name as brewer, email, count(beers.id)
-        FROM auth_user
-        LEFT JOIN beers on auth_user.id = beers.user_id
-        GROUP BY (auth_user.name, email)
-        ORDER BY count DESC, auth_user.name;
-    `;
-    
-    return beers.rows;
-}
-
-export const load: PageServerLoad = async ({ locals }) => {
+/** @type {import('./$types').RequestHandler} */
+export async function GET({ locals }) {
     const session = await locals.auth.validate();
     if (!session || !session.user.admin) {
         throw redirect(302, '/');
     }
 
-    const users = await sql`
-        SELECT id, auth_user.name, email, verified, groups.name AS group FROM auth_user LEFT JOIN groups ON auth_user.group_id = groups.group_id;
-    `;
-
-    let sorted = users.rows;
-    sorted.sort((a, b) => {
-        if (a.group === b.group) {
-            return a.name.localeCompare(b.name);
-        }
-        return (a.group ?? "zzz").localeCompare(b.group ?? "zzz");
-    });
-
-    const total = {
-        users: users.rows.length,
-        external: users.rows.filter(user => user.group !== 'Bonner Heimbrauer e.V.').length,
-    };
-
     const beers = await getBeers();
-    const beerCounts = await getNumBeersPerUser();
-    const beerTotal = beerCounts.reduce((acc, cur) => acc + parseInt(cur.count), 0);
+    const escapeNewlines = (str) => {
+        return str.replace(/\r\n/g, '\\n').replace(/[;]/g, '.');
+    }
+    const tuples = beers.map(beer => {
+        return [
+            beer.stand,
+            beer.group_name,
+            beer.user_name,
+            beer.beer_name,
+            beer.style,
+            `${beer.abv}%`,
+            beer.gravity,
+            beer.ibu,
+            escapeNewlines(beer.description),
+        ];
+    });
+    const csv = [
+        ['Stand', 'Gruppe', 'Name', 'Bier', 'Stil', 'Alkohol', 'Stammwürze', 'Bitterkeit', 'Beschreibung'],
+        ...tuples
+    ].map(row => row.join(';')).join('\n');
 
-    return { users: sorted, beers, beerCounts, beerTotal, total };
+    return new Response(
+        csv,
+        {
+            status: 200,
+            headers: {
+                'Content-Type': 'text/csv',
+                'Content-Disposition': 'attachment; filename="bierliste.csv"'
+            },
+        }
+    );
+
+    // return {
+    //     headers: {
+    //         'Content-Type': 'text/csv',
+    //         'Content-Disposition': 'attachment; filename="bierliste.csv"'
+    //     },
+    //     body: csv
+    // };
 }
-
-export const actions: Actions = {
-    delete: async ({ request, locals }) => {
-        const form = await request.formData();
-        const id = form.get('userid');
-
-        await sql`
-            DELETE FROM beers WHERE user_id = ${id}
-        `;
-        await sql`
-            DELETE FROM user_verify_requests WHERE user_id = ${id}
-        `;
-        await sql`
-            DELETE FROM user_session WHERE user_id = ${id}
-        `;
-        await sql`
-            DELETE FROM user_key WHERE user_id = ${id}
-        `;
-        await sql`
-            DELETE FROM groups WHERE owner_id = ${id}
-        `;
-        await sql`
-            DELETE FROM auth_user WHERE id = ${id}
-        `;
-    },
-};

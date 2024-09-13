@@ -63,4 +63,39 @@
             </div>
         </div>
     </div>
+
+    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div
+            class="relative mx-auto max-w-lg divide-x-0 divide-y divide-gray-secondary-400/75 border border-gray-secondary-400/60 sm:max-w-xl md:max-w-2xl lg:mx-0 lg:max-w-none lg:divide-x lg:divide-y-0 mb-10"
+            >
+            <div class="bg-gray-secondary-50 p-8 sm:p-10">
+                <h3 class="text-lg font-semibold text-slate-900 mb-10">Biere</h3>
+
+                <div class="w-full grid grid-cols-3 gap-4">
+                    <div class="font-semibold">Brauer</div>
+                    <div class="font-semibold">E-Mail</div>
+                    <div class="font-semibold">Anzahl Biere</div>
+                    {#each data.beerCounts as counts}
+                        <div>{ counts.brewer }</div>
+                        <div>{ counts.email }</div>
+                        <div>{ counts.count }</div>
+                    {/each}
+                        <div>&nbsp;</div>
+                        <div>&nbsp;</div>
+                        <div>{ data.beerTotal }</div>
+                </div>
+
+                <div>
+                    <a href="/beers">
+                        <button
+                            class="group items-center justify-center bg-slate-700 px-3 py-1 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900"
+                            type="submit"
+                        >
+                            CSV-Export
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
