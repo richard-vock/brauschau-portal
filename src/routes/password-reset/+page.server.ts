@@ -35,7 +35,7 @@ export const actions: Actions = {
         `;
 
         if (res.rowCount === 0) {
-            return fail(400, { email, msg: "E-Mail-Adresse nicht gefunden. Hast du dich vielleicht vertippt oder eine andere Adresse benutzt? Im Notfall schreib uns an info@bonner-brauschau.de, dann gucken wir nach." });
+            return fail(400, { email, msg: "E-Mail-Adresse nicht gefunden. Hast du dich vielleicht vertippt oder eine andere Adresse benutzt? Im Notfall schreib uns an aussteller@bonner-brauschau.de, dann gucken wir nach." });
         }
 
         const user = res.rows[0]["id"];
@@ -59,7 +59,7 @@ export const actions: Actions = {
             },
         });
         const info = await transporter.sendMail({
-            from: '"Bonner Brauschau" <info@bonner-brauschau.de>',
+            from: '"Bonner Brauschau" <aussteller@bonner-brauschau.de>',
             to: email,
             subject: "Passwort zurücksetzen",
             text: `Um Dein Passwort für die Bonner Brauschau zurückzusetzen, klicke bitte auf folgenden Link: https://bonner-brauschau.de/password-reset?key=${key}&user=${user}`,
