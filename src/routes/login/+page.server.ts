@@ -25,12 +25,13 @@ export const actions: Actions = {
     login: async ({ request, locals }) => {
         const form = await request.formData();
         const email = form.get('email');
+        const emailLower = email.toLowerCase();
         const password = form.get('password');
 
         try {
             const key = await auth.useKey(
                 "username",
-                email.toLowerCase(),
+                emailLower,
                 password
             );
             const session = await auth.createSession({
