@@ -14,17 +14,26 @@ export const load: PageServerLoad = async ({ url, locals }) => {
     const key = url.searchParams.get("key");
     if (key != null) {
         const res = await sql`
-            SELECT user_id FROM user_verify_requests WHERE key = ${key};
+            SELECT user_id, invite FROM user_verify_requests WHERE key = ${key};
         `;
         if (res.rowCount === 0) {
             return {success: false, error: "Link ist ungültig oder abgelaufen"};
         }
 
         const user = res.rows[0]["user_id"];
+        const invite = res.rows[0]["invite"];
 
         await sql`
             DELETE FROM user_verify_requests WHERE key = ${key};
         `;
+
+        console.log(`Verifying user ${user} with invite ${invite}`);
+
+        if (invite) {
+            await sql`
+                DELETE FROM invites WHERE key = ${invite};
+            `;
+        }
 
         await auth.updateUserAttributes(
             user,
@@ -49,35 +58,22 @@ export const load: PageServerLoad = async ({ url, locals }) => {
             },
         });
         const info = await transporter.sendMail({
-            from: '"Bonner Brauschau" <info@bonner-brauschau.de>',
+            from: '"Bonner Brauschau" <aussteller@bonner-brauschau.de>',
             to: session.user.email,
-            subject: "Anmeldebestätigung zur Bonner Brauschau 2024",
+            subject: "Anmeldebestätigung zur Bonner Brauschau 2025",
             text: `Liebe/r Brauer/in,
 
-wir freuen uns sehr über deine Anmeldung zur Teilnahme an der fünften Bonner Brauschau. Hier hast du die Möglichkeit deine Bierkreationen mit uns und der Öffentlichkeit zu teilen.
+wir freuen uns sehr über deine Anmeldung zur Teilnahme an der sechsten Bonner Brauschau. Hier hast du die Möglichkeit deine Bierkreationen mit uns und der Öffentlichkeit zu teilen.
 
-Veranstaltung: 5. Bonner Brauschau
-Datum: 28. September 2024
-Ort: GSI
+Veranstaltung: 6. Bonner Brauschau
+Datum: 08. November 2025
+Ort: Gustav Stresemann Institut (GSI), Langer Grabenweg 68, 53175 Bonn
 
 In den kommenden Wochen und Monaten erhältst du weitere Informationen zur Veranstaltung, einschließlich des genauen Ablaufs und weiterer organisatorischer Hinweise.
 
-Solltest Du als Aussteller im GSI selber übernachten wollen gibt es für 2024 Sonderpreise:
+Für externe Aussteller schnüren wir wieder ein attraktives Übernachtungspaket im GSI zusammen. Auch hierzu melden wir uns nochmal separat.
 
-Einzelzimmer inkl. Frühstück: 72€
-Doppelzimmer inkl. Frühstück: 96€
-
-Dafür musst Du direkt über die E-Mailadresse der Reservierungsabteilung des GSI
-
-    info@gsi-bonn.de
-
-buchen und das Stichwort
-
-    Crew-Heimbrauer 2024
-
-angeben.
-
-Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter info@bonner-brauschau.de.
+Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter aussteller@bonner-brauschau.de.
 
 Mit freundlichen Grüßen,
 
@@ -87,30 +83,17 @@ Bonner Heimbrauer e.V.
             `,
             html: `Liebe/r Brauer/in,<br /><br />\n\n
 
-wir freuen uns sehr über deine Anmeldung zur Teilnahme an der fünften Bonner Brauschau. Hier hast du die Möglichkeit deine Bierkreationen mit uns und der Öffentlichkeit zu teilen.<br /><br />\n\n
+wir freuen uns sehr über deine Anmeldung zur Teilnahme an der sechsten Bonner Brauschau. Hier hast du die Möglichkeit deine Bierkreationen mit uns und der Öffentlichkeit zu teilen.<br /><br />\n\n
 
-Veranstaltung: 5. Bonner Brauschau<br />\n
-Datum: 28. September 2024<br />\n
-Ort: GSI<br /><br />\n\n
+Veranstaltung: 6. Bonner Brauschau<br />\n
+Datum: 08. November 2025<br />\n
+Ort: Gustav Stresemann Institut (GSI), Langer Grabenweg 68, 53175 Bonn<br />\n\n
 
 In den kommenden Wochen und Monaten erhältst du weitere Informationen zur Veranstaltung, einschließlich des genauen Ablaufs und weiterer organisatorischer Hinweise.<br /><br />\n\n
 
-Solltest Du als Aussteller im GSI selber übernachten wollen gibt es für 2024 Sonderpreise:<br /><br />\n\n
+Für externe Aussteller schnüren wir wieder ein attraktives Übernachtungspaket im GSI zusammen. Auch hierzu melden wir uns nochmal separat.<br /><br />\n\n
 
-Einzelzimmer inkl. Frühstück: 72€<br />\n
-Doppelzimmer inkl. Frühstück: 96€<br /><br />\n\n
-
-Dafür musst Du direkt über die E-Mailadresse der Reservierungsabteilung des GSI<br /><br />\n\n
-
-    info@gsi-bonn.de<br /><br />\n\n
-
-buchen und das Stichwort<br /><br />\n\n
-
-    Crew-Heimbrauer 2024<br /><br />\n\n
-
-angeben.<br /><br />\n\n
-
-Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter <a href="mailto:info@bonner-brauschau.de">info@bonner-brauschau.de</a>.<br /><br />\n\n
+Falls du Fragen hast oder weitere Informationen benötigst, kontaktier uns gerne unter <a href="mailto:aussteller@bonner-brauschau.de">aussteller@bonner-brauschau.de</a>.<br /><br />\n\n
 
 Mit freundlichen Grüßen,<br /><br />\n\n
 

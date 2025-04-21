@@ -16,7 +16,7 @@
                     <h1
                         class="w-full text-5xl font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-6xl xl:leading-tighter head-one"
                         >
-                        5.&nbsp;BONNER
+                        6.&nbsp;BONNER
                     </h1>
                     <h2
                         class="text-4xl font-semibold leading-tighter text-orange-500 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-5xl xl:leading-tighter head-two"
@@ -27,7 +27,7 @@
                 <h2
                     class="text-3xl mt-4 mb-8 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-4xl xl:leading-tighter"
                     >
-                    28.09.2024
+                    08.11.2025
                 </h2>
                 <img
                     src={glas}
@@ -78,7 +78,7 @@
         >
           <div class="md:w-1/2 md:py-8 md:pr-6 lg:pr-16">
             <p class="text-lg leading-relaxed text-slate-700">
-            Zum 5. Mal haben über 30 Hobbybrauer aus ganz Deutschland die Möglichkeit, ihre selbstgebrauten
+            Zum 6. Mal haben über 30 Hobbybrauer aus ganz Deutschland die Möglichkeit, ihre selbstgebrauten
             Biere einem breiten Publikum zu präsentieren und mit anderen Bier-Enthusiasten auszutauschen.
             </p>
             <p class="text-lg leading-relaxed text-slate-700">

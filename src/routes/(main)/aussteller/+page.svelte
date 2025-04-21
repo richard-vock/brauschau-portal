@@ -147,7 +147,7 @@
                 class="mt-6 leading-relaxed text-slate-700 sm:mt-8 sm:text-lg sm:leading-8"
                 >
                     Schreib uns bei Fragen aber gerne an
-                    <br /><a href="mailto:info@bonner-brauschau.de"><b>info@bonner-brauschau.de</b></a>
+                    <br /><a href="mailto:aussteller@bonner-brauschau.de"><b>aussteller@bonner-brauschau.de</b></a>
                 </p>
             </div>
         </div>

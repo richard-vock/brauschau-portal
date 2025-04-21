@@ -312,7 +312,7 @@
             Schick uns eine E-Mail mit Deinen Fragen an
         </p>
         <div class="flex w-full justify-center mt-5">
-            <a href="mailto:info@bonner-brauschau.de"><b>info@bonner-brauschau.de</b></a>
+            <a href="mailto:aussteller@bonner-brauschau.de"><b>aussteller@bonner-brauschau.de</b></a>
         </div>
         <p
             class="mx-auto mt-5 max-w-xl text-center text-lg leading-relaxed text-slate-700"

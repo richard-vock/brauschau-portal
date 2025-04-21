@@ -15,15 +15,22 @@ const getBeers = async () => {
             ibu,
             beers.description as description,
             recipe,
-            untappd
+            untappd,
+            brewer_places.place
         FROM beers
         LEFT JOIN auth_user ON auth_user.id = beers.user_id
         LEFT JOIN groups ON auth_user.group_id = groups.group_id
+        LEFT JOIN brewer_places ON auth_user.id = brewer_places.user_id
         ORDER BY group_name, user_name, id;
     `;
     
     let sortedBeers = beers.rows;
     sortedBeers.sort((a, b) => {
+        const firstPlaceA = parseInt(("" + (a.place ?? 999)).split('-')[0]);
+        const firstPlaceB = parseInt(("" + (b.place ?? 999)).split('-')[0]);
+        if (firstPlaceA !== firstPlaceB) {
+            return firstPlaceA - firstPlaceB;
+        }
         if (a.group_name === b.group_name) {
             if (a.user_name === b.user_name) {
                 return a.beer_name.localeCompare(b.beer_name);
@@ -54,7 +61,7 @@ const getBeers = async () => {
             description: sanitize(beer.description),
             recipe: sanitize(beer.recipe),
             untappd: sanitize(beer.untappd),
-            stand: idx + 1
+            stand: beer.place,
         };
     });
 }

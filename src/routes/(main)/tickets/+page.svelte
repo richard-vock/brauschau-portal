@@ -26,7 +26,7 @@
                 class="mt-10 mb-10 flex flex-col sm:flex-row sm:space-x-5 md:mt-12 md:justify-center xl:justify-start"
                 >
                 <a
-                    href="https://tickets.bonner-brauschau.de/bonner-heimbrauer/bs2024/"
+                    href="https://tickets.bonner-brauschau.de/bonner-heimbrauer/bs2025/"
                     class="group inline-flex w-full items-center justify-center bg-slate-700 px-6 py-3 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 sm:w-auto xl:px-7 xl:py-4 xl:text-lg"
                     >Hier geht's zum Ticketshop</a
                 >

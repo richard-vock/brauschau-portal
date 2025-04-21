@@ -26,18 +26,31 @@
             <div class="bg-gray-secondary-50 p-8 sm:p-10">
                 <h3 class="text-lg font-semibold text-slate-900 mb-10">Benutzer</h3>
 
-                <div class="w-full grid grid-cols-5 gap-4">
-                    <div class="font-semibold">Name</div>
-                    <div class="font-semibold">E-Mail</div>
-                    <div class="font-semibold">Gruppe</div>
-                    <div class="font-semibold">Verifiziert</div>
-                    <div></div>
+                <div class="w-full grid grid-cols-3 xl:grid-cols-6">
+                    <div class="font-semibold xl:border-b-[1px] border-black p-4">Stand</div>
+                    <div class="font-semibold xl:border-b-[1px] border-black p-4">Name</div>
+                    <div class="font-semibold xl:border-b-[1px] border-black p-4">E-Mail</div>
+                    <div class="font-semibold border-b-[1px] border-black p-4">Gruppe</div>
+                    <div class="font-semibold border-b-[1px] border-black p-4">Verifiziert</div>
+                    <div class="font-semibold border-b-[1px] border-black p-4"></div>
                     {#each data.users as user}
-                        <div>{ user.name || "(nicht festgelegt)" }</div>
-                        <div>{ user.email }</div>
-                        <div>{ user.group || '' }</div>
-                        <div>{ user.verified ? "Ja" : "Nein" }</div>
-                        <div>
+                        <div class="xl:border-b-[1px] border-black p-4">{ user.name || "(nicht festgelegt)" }</div>
+                        <div class="xl:border-b-[1px] border-black p-4" style:word-break="break-all">{ user.email }</div>
+                        <div class="xl:border-b-[1px] border-black p-4">{ user.group || '' }</div>
+                        <div class="border-b-[1px] border-black p-4">{ user.verified ? "Ja" : "Nein" }</div>
+                        <div class="flex flex-row items-center border-b-[1px] border-black">
+                            <form action="?/assign" method="POST">
+                                <input type="hidden" name="userid" value={user.id} />
+                                <input type="text" name="stand" value={user.place} style="width: 50px; height: 32px" />
+                                <button
+                                    class="group items-center justify-center bg-slate-700 px-3 py-1 text-base font-small text-white duration-150 ease-in-out hover:bg-slate-900"
+                                    type="submit"
+                                >
+                                    Speichern
+                                </button>
+                            </form>
+                        </div>
+                        <div class="border-b-[1px] border-black p-4">
                             <form action="?/delete" method="POST">
                                 <input type="hidden" name="userid" value={user.id} />
                                 <button
@@ -94,6 +107,22 @@
                             CSV-Export
                         </button>
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div
+            class="relative mx-auto max-w-lg divide-x-0 divide-y divide-gray-secondary-400/75 border border-gray-secondary-400/60 sm:max-w-xl md:max-w-2xl lg:mx-0 lg:max-w-none lg:divide-x lg:divide-y-0 mb-10"
+            >
+            <div class="bg-gray-secondary-50 p-8 sm:p-10">
+                <h3 class="text-lg font-semibold text-slate-900 mb-10">Einladungslinks</h3>
+
+                <div class="w-full">
+                    {#each data.invites as invite}
+                        <div>https://bonner-brauschau.de/register?invite={ invite }</div>
+                    {/each}
                 </div>
             </div>
         </div>

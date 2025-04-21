@@ -8,9 +8,26 @@ import { sql } from "@vercel/postgres";
 
 import nodemailer from 'nodemailer';
 
-export const load: PageServerLoad = async ({ locals }) => {
+const has_invite = async (invite: string) => {
+    const res = await sql`
+        SELECT COUNT(key) FROM invites WHERE key = ${invite};
+    `;
+    return parseInt(res.rows[0]["count"]) > 0;
+}
+
+export const load: PageServerLoad = async (params) => {
+    const { locals, url } = params;
+
     const session = await locals.auth.validate();
     if (session) throw redirect(302, '/');
+
+    const invite = url.searchParams.get('invite');
+    if (invite != null) {
+        const has_inv = await has_invite(invite);
+        if (has_inv) {
+            return { success: true, invite };
+        }
+    }
 
     try {
         const count_res = await sql`
@@ -32,22 +49,33 @@ export const actions: Actions = {
         const email = form.get('email');
         const password = form.get('password');
         const password2 = form.get('password-repeat');
+        const invite = form.get('invite');
+
+        if (invite != null) {
+            const has_inv = await has_invite(invite);
+            if (!has_inv) {
+                logger.info("Invalid invite code");
+                return fail(400, { invite, invalid: true });
+            }
+        }
 
         if (password !== password2) {
             logger.info("Passwords do not match");
             return fail(400, { email, mismatch: true });
         }
 
+        const emailLower = email.toLowerCase();
+
         try {
             const user = await auth.createUser({
                 key: {
                     providerId: "username",
-                    providerUserId: email,
+                    providerUserId: emailLower,
                     password: password,
                 },
                 attributes: {
                     name: "",
-                    email: email,
+                    email: emailLower,
                     verified: false,
                     admin: false,
                 } 
@@ -60,8 +88,8 @@ export const actions: Actions = {
                 console.log(`[log] Generated key: ${key}`);
                 logger.info(`Generated key: ${key}`);
                 res = await sql`
-                    INSERT INTO user_verify_requests (key, user_id)
-                    VALUES (${key}, ${user.userId})
+                    INSERT INTO user_verify_requests (key, user_id, invite)
+                    VALUES (${key}, ${user.userId}, ${invite})
                     ON CONFLICT (key) DO NOTHING;
                 `;
             } while (res.rowCount === 0);
@@ -76,7 +104,7 @@ export const actions: Actions = {
                 },
             });
             const info = await transporter.sendMail({
-                from: '"Bonner Brauschau" <info@bonner-brauschau.de>',
+                from: '"Bonner Brauschau" <aussteller@bonner-brauschau.de>',
                 to: email,
                 subject: "E-Mail-Adresse bestätigen",
                 text: `Bitte bestätige deine E-Mail-Adresse, indem du auf folgenden Link klickst: https://bonner-brauschau.de/register/verify?key=${key}`,

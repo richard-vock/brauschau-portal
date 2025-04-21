@@ -15,15 +15,22 @@ const getBeers = async () => {
             ibu,
             beers.description as description,
             recipe,
-            untappd
+            untappd,
+            brewer_places.place
         FROM beers
         LEFT JOIN auth_user ON auth_user.id = beers.user_id
         LEFT JOIN groups ON auth_user.group_id = groups.group_id
+        LEFT JOIN brewer_places ON auth_user.id = brewer_places.user_id
         ORDER BY group_name, user_name, id;
     `;
     
     let sortedBeers = beers.rows;
     sortedBeers.sort((a, b) => {
+        const firstPlaceA = parseInt(("" + (a.place ?? 999)).split('-')[0]);
+        const firstPlaceB = parseInt(("" + (b.place ?? 999)).split('-')[0]);
+        if (firstPlaceA !== firstPlaceB) {
+            return firstPlaceA - firstPlaceB;
+        }
         if (a.group_name === b.group_name) {
             if (a.user_name === b.user_name) {
                 return a.beer_name.localeCompare(b.beer_name);
@@ -54,7 +61,7 @@ const getBeers = async () => {
             description: sanitize(beer.description),
             recipe: sanitize(beer.recipe),
             untappd: sanitize(beer.untappd),
-            stand: idx + 1
+            stand: beer.place,
         };
     });
 }
@@ -71,6 +78,15 @@ const getNumBeersPerUser = async () => {
     return beers.rows;
 }
 
+const getInviteCodes = async () => {
+    const invites = await sql`
+        SELECT key
+        FROM invites
+        ORDER BY key;
+    `;
+    return invites.rows.map((invite) => invite.key);
+}
+
 export const load: PageServerLoad = async ({ locals }) => {
     const session = await locals.auth.validate();
     if (!session || !session.user.admin) {
@@ -78,7 +94,10 @@ export const load: PageServerLoad = async ({ locals }) => {
     }
 
     const users = await sql`
-        SELECT id, auth_user.name, email, verified, groups.name AS group FROM auth_user LEFT JOIN groups ON auth_user.group_id = groups.group_id;
+        SELECT id, auth_user.name, email, verified, groups.name AS group, brewer_places.place
+        FROM auth_user
+        LEFT JOIN groups ON auth_user.group_id = groups.group_id
+        LEFT JOIN brewer_places ON auth_user.id = brewer_places.user_id;
     `;
 
     let sorted = users.rows;
@@ -98,7 +117,9 @@ export const load: PageServerLoad = async ({ locals }) => {
     const beerCounts = await getNumBeersPerUser();
     const beerTotal = beerCounts.reduce((acc, cur) => acc + parseInt(cur.count), 0);
 
-    return { users: sorted, beers, beerCounts, beerTotal, total };
+    const invites = await getInviteCodes();
+
+    return { users: sorted, beers, beerCounts, beerTotal, total, invites };
 }
 
 export const actions: Actions = {
@@ -123,6 +144,16 @@ export const actions: Actions = {
         `;
         await sql`
             DELETE FROM auth_user WHERE id = ${id}
+        `;
+    },
+    assign: async ({ request, locals }) => {
+        const form = await request.formData();
+        const id = form.get('userid');
+        const stand = form.get('stand');
+
+        await sql`
+            INSERT INTO brewer_places (user_id, place) VALUES (${id}, ${stand})
+            ON CONFLICT (user_id) DO UPDATE SET place = ${stand}
         `;
     },
 };

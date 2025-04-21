@@ -5,6 +5,7 @@
 
     export let data;
     export let form;
+    console.log(data.invite);
 
     let idle = false;
     function setIdle() {
@@ -54,12 +55,12 @@
                 </p>
                 <p class="mt-4 text-justify leading-relaxed text-slate-600">
                     Falls du zu einem Verein oder einer Gruppe gehörst von denen bereits jemand
-                    für die Brauschau registriert ist schick uns bitte eine E-Mail an <a href="mailto:info@bonner-brauschau.de"><b>info@bonner-brauschau.de</b></a>.
+                    für die Brauschau registriert ist schick uns bitte eine E-Mail an <a href="mailto:aussteller@bonner-brauschau.de"><b>aussteller@bonner-brauschau.de</b></a>.
                 </p>
                 <p class="mt-4 text-justify leading-relaxed text-slate-600">
                     Ansonsten springen immer wieder welche ab oder wir finden doch noch Platz für den einen oder die andere.
                     Falls du später - notfalls auch kurzfristig - noch teilnehmen würdest,
-                    schick uns gerne auch eine E-Mail an <a href="mailto:info@bonner-brauschau.de"><b>info@bonner-brauschau.de</b></a>.
+                    schick uns gerne auch eine E-Mail an <a href="mailto:aussteller@bonner-brauschau.de"><b>aussteller@bonner-brauschau.de</b></a>.
                     <br />Wir versuchen alles, können aber nichts versprechen.
                 </p>
             {:else}
@@ -173,6 +174,13 @@
                 <!-- Form container -->
                 <div class="mt-10 w-full">
                     <form method="POST" use:enhance on:submit={setIdle}>
+                        {#if data?.invite }
+                            <input
+                                type="hidden"
+                                name="invite"
+                                value={data.invite}
+                            />
+                        {/if}
                         <div>
                             <label
                                 for="email"
