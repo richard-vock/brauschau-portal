@@ -5,8 +5,8 @@
 </script>
 
 <section class="relative overflow-hidden bg-amber-100 pt-16 sm:pt-24">
-    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 md:flex md:flex-row md:gap-16 mb-10">
-        <div class="w-full md:w-1/2">
+    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 lg:flex lg:flex-row md:gap-16 mb-10">
+        <div class="w-full lg:w-1/2">
             <div
                 class="flex flex-col items-center mx-auto max-w-lg md:px-16 pb-14 md:mx-0 md:max-w-none md:pb-48 lg:pb-52 xl:max-w-xl xl:pb-14"
                 >
@@ -25,9 +25,14 @@
                     </h2>
                 </div>
                 <h2
-                    class="text-3xl mt-4 mb-8 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-4xl xl:leading-tighter"
+                    class="text-3xl text-center mt-4 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-4xl xl:leading-tighter"
                     >
-                    08.11.2025
+                    08.11.2025 14:00
+                </h2>
+                <h2
+                    class="text-xl text-center mt-2 mb-8 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-2xl xl:leading-tighter"
+                    >
+                    Gustav-Stresemann-Institut (GSI)
                 </h2>
                 <img
                     src={glas}

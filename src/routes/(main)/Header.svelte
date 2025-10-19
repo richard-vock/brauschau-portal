@@ -74,14 +74,14 @@ let mobileMenuOpen = false;
                         <form action="/login?/logout" method="POST" use:enhance>
                             <button
                                 type="submit"
-                                class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900"
+                                class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 hidden md:inline-block"
                             >
                                 Ausloggen
                             </button>
                         </form>
                     {:else}
                         <a
-                            class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900"
+                            class="group inline-flex items-center justify-center bg-slate-700 px-5 py-2.5 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900 hidden md:inline-block"
                             href="/login"
                         >
                             Einloggen
