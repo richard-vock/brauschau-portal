@@ -1,20 +1,20 @@
 {
   description = "dev setup";
 
-  outputs = { nixpkgs, ... }:
-  let
-    inherit (nixpkgs) lib;
+  # 1) Pin nixpkgs so you can update Node later with `nix flake update`
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    npm = pkgs.nodePackages;
-  in
-  {
-    devShells.x86_64-linux.default =
-      pkgs.mkShell {
-        packages = with npm; [
-          pnpm
-          vercel
-        ];
-      };
+  outputs = { self, nixpkgs, ... }:
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; };
+  in {
+    devShells.${system}.default = pkgs.mkShell {
+      packages = with pkgs; [
+        nodejs_22                    # Node >= 22.12 (meets your requirement)
+        nodePackages_latest.pnpm     # recent pnpm from nixpkgs
+        nodePackages_latest.vercel   # vercel CLI
+      ];
+    };
   };
 }
