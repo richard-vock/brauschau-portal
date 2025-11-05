@@ -1,8 +1,26 @@
-import { fail, redirect } from "@sveltejs/kit";
-import { auth } from "$lib/server/lucia";
+import { redirect } from "@sveltejs/kit";
 import { sql } from "@vercel/postgres";
 
 import { getBeers, getNumBeersPerUser } from "$lib/server/beers";
+
+import { init, id } from "@instantdb/admin";
+import { VITE_INSTANT_APP_ADMIN_TOKEN } from "$env/static/private";
+import type { Actions, PageServerLoad } from "./$types";
+
+const APP_ID = "d25c25b4-b02e-4c42-8364-1272953154f0";
+const ADMIN_TOKEN = VITE_INSTANT_APP_ADMIN_TOKEN;
+
+let instantDb: ReturnType<typeof init> | null = null;
+
+const getInstantDb = () => {
+  if (!ADMIN_TOKEN) {
+    throw new Error("INSTANT_APP_ADMIN_TOKEN is not configured");
+  }
+  if (!instantDb) {
+    instantDb = init({ appId: APP_ID, adminToken: ADMIN_TOKEN });
+  }
+  return instantDb;
+};
 
 const getInviteCodes = async () => {
   const invites = await sql`
@@ -86,5 +104,58 @@ export const actions: Actions = {
             INSERT INTO brewer_places (user_id, place) VALUES (${id}, ${stand})
             ON CONFLICT (user_id) DO UPDATE SET place = ${stand}
         `;
-    },
+  },
+  instantdb: async () => {
+    const db = getInstantDb();
+    const beers = await getBeers();
+    const groupIds = new Map<string, string>();
+
+    const data = await db.query({ beers: {}, groups: {} });
+    const { beers: dbBeers, groups: dbGroups } = data;
+
+    db.transact(dbBeers.map((b) => db.tx.goals[b.id].delete()));
+    db.transact(dbGroups.map((g) => db.tx.goals[g.id].delete()));
+
+    for (const beer of beers) {
+      const oldGroupId = beer.group_id ?? "";
+
+      let groupId: string | undefined = undefined;
+      if (oldGroupId !== "") {
+        groupId = groupIds.get(oldGroupId) ?? undefined;
+        if (groupId === undefined) {
+          groupId = id();
+          await db.transact([
+            db.tx.groups[groupId].update({
+              description: beer.group_desc ?? "",
+              name: beer.group_name,
+              original_id: oldGroupId,
+            }),
+          ]);
+          groupIds.set(oldGroupId, groupId!);
+          console.log(`created new group ${groupId}`);
+        }
+      }
+
+      const beerId = id();
+      await db.transact([
+        db.tx.beers[beerId].update({
+          abv: beer.abv ?? "",
+          description: beer.description ?? "",
+          gravity: beer.gravity ?? "",
+          ibu: beer.ibu ?? "",
+          name: beer.beer_name ?? "",
+          place: beer.stand ?? "",
+          style: beer.style ?? "",
+          recipe: beer.recipe ?? "",
+          untappd: beer.untappd ?? "",
+          user: beer.user_name ?? "",
+        }),
+      ]);
+
+      if (groupId) {
+        console.log(`Linking beer ${beerId} to group ${groupId}`);
+        await db.transact([db.tx.beers[beerId].link({ groups: groupId })]);
+      }
+    }
+  },
 };

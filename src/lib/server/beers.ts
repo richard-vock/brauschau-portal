@@ -5,6 +5,8 @@ export const getBeers = async () => {
         SELECT
             beers.id as id,
             groups.name AS group_name,
+            groups.group_id AS group_id,
+            groups.description AS group_desc,
             auth_user.name AS user_name,
             beers.name as beer_name,
             style,
@@ -50,6 +52,8 @@ export const getBeers = async () => {
   return sortedBeers.map((beer, idx) => {
     return {
       group_name: sanitize(beer.group_name),
+      group_id: beer.group_id,
+      group_desc: beer.group_desc,
       user_name: sanitize(beer.user_name),
       beer_name: sanitize(beer.beer_name),
       style: sanitize(beer.style),

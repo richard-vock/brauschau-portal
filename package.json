@@ -33,6 +33,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@instantdb/admin": "^0.22.45",
+    "@instantdb/core": "^0.22.45",
     "@lucia-auth/adapter-postgresql": "^2.0.2",
     "@vercel/postgres": "^0.1.3",
     "dotenv": "^16.0.3",
