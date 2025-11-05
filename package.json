@@ -49,6 +49,10 @@
       "node": true,
       "es2021": true
     },
+    "indent": [
+      "warning",
+      4
+    ],
     "extends": [
       "eslint:recommended",
       "plugin:svelte/recommended"
