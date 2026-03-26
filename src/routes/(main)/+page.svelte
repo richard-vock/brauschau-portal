@@ -29,7 +29,7 @@
 				<h2
 					class="text-3xl text-center mt-4 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-4xl xl:leading-tighter"
 				>
-					21.11.2025 14:00
+					21.11.2026 14:00
 				</h2>
 				<h2
 					class="text-xl text-center mt-2 mb-8 font-semibold leading-tighter text-slate-900 md:mx-auto md:max-w-2xl md:text-center xl:mx-0 xl:text-left xl:text-2xl xl:leading-tighter"
