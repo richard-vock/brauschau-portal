@@ -11,6 +11,7 @@ async function resetDatabase() {
         DROP TABLE IF EXISTS groups;
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS beers;
+        DROP TABLE IF EXISTS invites;
         DROP TABLE IF EXISTS auth_user;
 
         CREATE TABLE IF NOT EXISTS auth_user (
@@ -44,7 +45,13 @@ async function resetDatabase() {
 
         CREATE TABLE IF NOT EXISTS user_verify_requests (
             key TEXT NOT NULL PRIMARY KEY,
-            user_id TEXT NOT NULL REFERENCES auth_user(id)
+            user_id TEXT NOT NULL REFERENCES auth_user(id),
+            invite TEXT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS invites (
+            key TEXT NOT NULL PRIMARY KEY,
+            given_away BOOLEAN NOT NULL DEFAULT false
         );
 
         CREATE TABLE IF NOT EXISTS beers (

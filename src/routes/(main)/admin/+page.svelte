@@ -173,15 +173,46 @@
 			class="relative mx-auto max-w-lg divide-x-0 divide-y divide-gray-secondary-400/75 border border-gray-secondary-400/60 sm:max-w-xl md:max-w-2xl lg:mx-0 lg:max-w-none lg:divide-x lg:divide-y-0 mb-10"
 		>
 			<div class="bg-gray-secondary-50 p-8 sm:p-10">
-				<h3 class="text-lg font-semibold text-slate-900 mb-10">
+				<h3 class="text-lg font-semibold text-slate-900 mb-6">
 					Einladungslinks
 				</h3>
 
-				<div class="w-full">
+				<form action="?/createInvite" method="POST" use:enhance class="mb-6">
+					<button
+						class="group items-center justify-center bg-slate-700 px-3 py-1 text-base font-medium text-white duration-150 ease-in-out hover:bg-slate-900"
+						type="submit"
+					>
+						Neuen Einladungslink erstellen
+					</button>
+				</form>
+
+				{#if form?.inviteCreated}
+					<div class="mb-6 border border-green-700 bg-green-50 p-4 text-green-900">
+						Neuer Einladungslink: https://bonner-brauschau.de/register?invite={form.inviteCreated}
+					</div>
+				{/if}
+
+				<div class="w-full space-y-3">
 					{#each data.invites as invite}
-						<div>
-							https://bonner-brauschau.de/register?invite={invite}
+						<div class="flex flex-col gap-2 border-b border-gray-secondary-400/75 pb-3 md:flex-row md:items-center md:justify-between">
+							<div style:word-break="break-all">
+								https://bonner-brauschau.de/register?invite={invite.key}
+							</div>
+							<form action="?/updateInvite" method="POST" use:enhance>
+								<input type="hidden" name="invite" value={invite.key} />
+								<label class="flex items-center gap-2 whitespace-nowrap text-sm text-slate-900">
+									<input
+										type="checkbox"
+										name="givenAway"
+										checked={invite.given_away}
+										on:change={(event) => event.currentTarget.form?.requestSubmit()}
+									/>
+									Schon vergeben
+								</label>
+							</form>
 						</div>
+					{:else}
+						<div>Noch keine Einladungslinks vorhanden.</div>
 					{/each}
 				</div>
 			</div>

@@ -1,4 +1,6 @@
-import { redirect } from "@sveltejs/kit";
+import { randomBytes } from "node:crypto";
+
+import { fail, redirect } from "@sveltejs/kit";
 import { sql } from "@vercel/postgres";
 
 import { getBeers, getNumBeersPerUser } from "$lib/server/beers";
@@ -24,11 +26,34 @@ const getInstantDb = () => {
 
 const getInviteCodes = async () => {
   const invites = await sql`
-        SELECT key
+        SELECT key, given_away
         FROM invites
-        ORDER BY key;
+        ORDER BY given_away, key;
     `;
-  return invites.rows.map((invite) => invite.key);
+  return invites.rows;
+};
+
+const createInviteCode = async () => {
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const key = randomBytes(9).toString("base64url");
+    const result = await sql`
+            WITH new_invite AS (
+                SELECT ${key}::text AS key
+            )
+            INSERT INTO invites (key, given_away)
+            SELECT key, false FROM new_invite
+            WHERE NOT EXISTS (
+                SELECT 1 FROM invites WHERE invites.key = new_invite.key
+            )
+            RETURNING key;
+        `;
+
+    if (result.rows[0]?.key) {
+      return result.rows[0].key;
+    }
+  }
+
+  throw new Error("Could not create a unique invite code");
 };
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -72,6 +97,37 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
+  createInvite: async (event: any) => {
+    const session = await event.locals.auth.validate();
+    if (!session || !session.user.admin) {
+      throw redirect(302, "/");
+    }
+
+    const invite = await createInviteCode();
+    return { inviteCreated: invite };
+  },
+  updateInvite: async (event: any) => {
+    const session = await event.locals.auth.validate();
+    if (!session || !session.user.admin) {
+      throw redirect(302, "/");
+    }
+
+    const form = await event.request.formData();
+    const key = form.get("invite");
+    const givenAway = form.get("givenAway") === "on";
+
+    if (typeof key !== "string" || key.length === 0) {
+      return fail(400, { inviteUpdated: false });
+    }
+
+    await sql`
+            UPDATE invites
+            SET given_away = ${givenAway}
+            WHERE key = ${key};
+        `;
+
+    return { inviteUpdated: key };
+  },
   delete: async ({ request, locals }) => {
     const form = await request.formData();
     const id = form.get("userid");
