@@ -6,20 +6,20 @@ import { sql } from "@vercel/postgres";
 import { getBeers, getNumBeersPerUser } from "$lib/server/beers";
 
 import { init, id } from "@instantdb/admin";
-import { VITE_INSTANT_APP_ADMIN_TOKEN } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import type { Actions, PageServerLoad } from "./$types";
 
 const APP_ID = "d25c25b4-b02e-4c42-8364-1272953154f0";
-const ADMIN_TOKEN = VITE_INSTANT_APP_ADMIN_TOKEN;
 
 let instantDb: ReturnType<typeof init> | null = null;
 
 const getInstantDb = () => {
-  if (!ADMIN_TOKEN) {
-    throw new Error("INSTANT_APP_ADMIN_TOKEN is not configured");
+  const adminToken = env.VITE_INSTANT_APP_ADMIN_TOKEN;
+  if (!adminToken) {
+    throw new Error("VITE_INSTANT_APP_ADMIN_TOKEN is not configured");
   }
   if (!instantDb) {
-    instantDb = init({ appId: APP_ID, adminToken: ADMIN_TOKEN });
+    instantDb = init({ appId: APP_ID, adminToken });
   }
   return instantDb;
 };
