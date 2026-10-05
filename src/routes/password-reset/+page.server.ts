@@ -28,7 +28,8 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 export const actions: Actions = {
   reset: async ({ request, locals }) => {
     const form = await request.formData();
-    const email = form.get("email");
+    const emailValue = form.get("email");
+    const email = typeof emailValue === "string" ? emailValue.trim().toLowerCase() : "";
 
     let res = await sql`
             SELECT id FROM auth_user WHERE email = ${email};
