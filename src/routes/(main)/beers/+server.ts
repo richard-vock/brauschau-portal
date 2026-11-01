@@ -15,14 +15,14 @@ export async function GET({ locals }) {
   const tuples = beers.map((beer) => {
     return [
       beer.stand,
-      beer.group_name,
-      beer.user_name,
-      beer.beer_name,
-      beer.style,
+      `"${beer.group_name}"`,
+      `"${beer.user_name}"`,
+      `"${beer.beer_name}"`,
+      `"${beer.style}"`,
       `${beer.abv}%`,
       beer.gravity,
       beer.ibu,
-      escapeNewlines(beer.description),
+      `"${escapeNewlines(beer.description)}"`,
     ];
   });
   const csv = [
