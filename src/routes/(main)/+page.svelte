@@ -1,7 +1,45 @@
 <script>
 	import glas from "$lib/images/glas.webp";
 	import movie from "$lib/videos/bs2022_aftermovie.mp4";
-	// export let data
+	import gsi from "$lib/images/sponsoren/gsi_Logo_RGB.png";
+	import brennecke from "$lib/images/sponsoren/2022-brennecke-logo-schwarz-300_150.jpg";
+	import braumischung from "$lib/images/sponsoren/bbm_de-logo18_braun_pfade.png";
+	import beerolution from "$lib/images/sponsoren/beerolution_Logo_600-250x59.jpg";
+	import hilbrandt from "$lib/images/sponsoren/biersommelier hilbrandt.png";
+	import biertasting from "$lib/images/sponsoren/Biertasting Bonn.png";
+	import braubebo from "$lib/images/sponsoren/BrauBeBo Logo.png";
+	import braumarkt from "$lib/images/sponsoren/braumarkt.svg";
+	import ccc from "$lib/images/sponsoren/CCC.png";
+	import gbcu from "$lib/images/sponsoren/GBCU loho.png";
+	import hopfenDerWelt from "$lib/images/sponsoren/HdW_Hipster_schwarz_seit2011.png";
+	import holyCraft from "$lib/images/sponsoren/Holy craft beer shop.jpg";
+	import ireks from "$lib/images/sponsoren/IREKS.png";
+	import braupartner from "$lib/images/sponsoren/Logo_Braupartner_Farbe.png";
+	import resch from "$lib/images/sponsoren/logo resch svg.svg";
+	import pfalzmalz from "$lib/images/sponsoren/pfalzmalz.avif";
+	import platoAleMania from "$lib/images/sponsoren/Plato_Ale Mania.png";
+	import brauwerkstatt from "$lib/images/sponsoren/RZ_brauwerkstatt_logo.jpg";
+
+	const sponsors = [
+		{ name: "Gustav-Stresemann-Institut (GSI)", logo: gsi },
+		{ name: "Brennecke", logo: brennecke },
+		{ name: "Braumischung.de", logo: braumischung },
+		{ name: "Beerolution", logo: beerolution },
+		{ name: "Biersommelier Hilbrandt", logo: hilbrandt },
+		{ name: "Biertasting Bonn", logo: biertasting },
+		{ name: "BrauBeBo", logo: braubebo },
+		{ name: "Braumarkt", logo: braumarkt },
+		{ name: "CCC", logo: ccc },
+		{ name: "GBCU", logo: gbcu },
+		{ name: "Hopfen der Welt", logo: hopfenDerWelt },
+		{ name: "Holy Craft Beer Shop", logo: holyCraft },
+		{ name: "IREKS", logo: ireks },
+		{ name: "Brau-Partner", logo: braupartner },
+		{ name: "Resch", logo: resch },
+		{ name: "Pfalzmalz", logo: pfalzmalz },
+		{ name: "Plato / Ale-Mania", logo: platoAleMania },
+		{ name: "Brauwerkstatt", logo: brauwerkstatt },
+	];
 </script>
 
 <section class="relative overflow-hidden bg-amber-100 pt-16 sm:pt-24">
@@ -67,7 +105,7 @@
 </section>
 
 <section
-	class="relative overflow-hidden bg-vanilla pb-[532px] pt-16 sm:pb-[500px] sm:pt-24 md:pb-64"
+	class="relative overflow-hidden bg-vanilla py-16 sm:py-24"
 >
 	<!-- Container -->
 	<div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -108,6 +146,33 @@
 				</p>
 			</div>
 		</div>
+	</div>
+</section>
+
+<section class="bg-amber-100 py-16 sm:py-24" aria-labelledby="sponsors-heading">
+	<div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+		<h2
+			id="sponsors-heading"
+			class="text-center text-3xl font-semibold text-slate-900 sm:text-4xl"
+		>
+			Unsere Sponsoren
+		</h2>
+		<p class="mt-4 text-center text-lg text-slate-700">
+			Vielen Dank für die Unterstützung der Bonner Brauschau!
+		</p>
+		<ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+			{#each sponsors as sponsor}
+				<li class="flex h-40 items-center justify-center rounded-lg bg-white p-6 sm:h-44">
+					<img
+						src={sponsor.logo}
+						alt={sponsor.name}
+						class="h-full w-full object-contain"
+						loading="lazy"
+						decoding="async"
+					/>
+				</li>
+			{/each}
+		</ul>
 	</div>
 </section>
 
